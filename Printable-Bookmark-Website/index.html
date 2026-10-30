@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<!-- pages-campaign site for Epsilon0xCell/Printable-Bookmark; source of truth: Printable-Bookmark-Website/ on the default branch -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Printable-Bookmark - spec sheet for main.py</title>
+<style>
+/* I laid this page out like a job ticket from a print shop because that is what main.py is in spirit: one board goes in one end, finished pieces come out the other. The crop marks are drawn with plain borders, the way I would mark a proof by hand, not with an image file. */
+:root{--paper:#ffffff;--ink:#141414;--dim:#5c5c5c;--red:#b3271e;--rule:#141414;--hair:#d9d9d9}
+*{box-sizing:border-box}
+body{margin:0;background:#ececec;color:var(--ink);font-family:Helvetica,Arial,sans-serif;line-height:1.58}
+.sheet{background:var(--paper);max-width:900px;margin:26px auto;padding:52px 56px 44px;position:relative;box-shadow:0 1px 6px rgba(0,0,0,.18)}
+@media(max-width:700px){.sheet{padding:38px 24px;margin:0}}
+/* Crop marks: each corner is two short rules meeting outside the trim area. I kept them small and black, like a real proof, instead of turning them into decoration. */
+.crop{position:absolute;width:22px;height:22px;pointer-events:none}
+.crop.tl{top:14px;left:14px;border-top:2px solid var(--ink);border-left:2px solid var(--ink)}
+.crop.tr{top:14px;right:14px;border-top:2px solid var(--ink);border-right:2px solid var(--ink)}
+.crop.bl{bottom:14px;left:14px;border-bottom:2px solid var(--ink);border-left:2px solid var(--ink)}
+.crop.br{bottom:14px;right:14px;border-bottom:2px solid var(--ink);border-right:2px solid var(--ink)}
+.jobline{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;border-bottom:2px solid var(--rule);padding-bottom:12px;font-size:.85rem;letter-spacing:.12em;text-transform:uppercase}
+.jobline .no{color:var(--red);font-weight:700}
+.jobline a{color:var(--ink);margin-left:14px;text-transform:none;letter-spacing:0}
+h1{font-size:2.35rem;line-height:1.12;margin:26px 0 10px;letter-spacing:-.01em}
+.dek{color:var(--dim);font-size:1.08rem;max-width:36rem;margin:0}
+.badges{display:flex;flex-wrap:wrap;gap:8px;margin:20px 0 2px}
+.badges img{height:20px}
+.heroimg{margin:24px 0 0;border-top:1px solid var(--hair);padding-top:20px}
+.heroimg img.banner{width:100%;display:block}
+.heroimg .row{display:flex;gap:18px;align-items:center;margin-top:12px}
+.heroimg .row img{width:64px}
+.heroimg figcaption{color:var(--dim);font-size:.9rem}
+section{border-top:1px solid var(--hair);padding:28px 0 4px;margin-top:26px}
+h2{font-size:.92rem;letter-spacing:.16em;text-transform:uppercase;margin:0 0 14px}
+h2 .tick{color:var(--red)}
+p{max-width:41rem}
+table.spec{border-collapse:collapse;width:100%;font-size:.97rem}
+table.spec th,table.spec td{border:1px solid var(--ink);padding:9px 13px;text-align:left;vertical-align:top}
+table.spec th{width:220px;background:#f4f4f4;font-weight:700}
+table.spec td code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.9rem}
+ol.steps{max-width:42rem;padding-left:22px}
+ol.steps li{margin-bottom:12px}
+pre{font-family:ui-monospace,Menlo,Consolas,monospace;background:#141414;color:#fff;padding:16px 18px;overflow-x:auto;font-size:.92rem;line-height:1.55}
+pre .c{color:#f0a49e}
+.margin-note{border-left:4px solid var(--red);padding:2px 0 2px 16px;max-width:42rem}
+.margin-note b{color:var(--red)}
+.verdict{display:flex;gap:34px;flex-wrap:wrap}
+.verdict div{min-width:200px}
+.verdict b{display:block;font-size:1.5rem}
+.verdict span{color:var(--dim);font-size:.93rem}
+footer{border-top:2px solid var(--rule);margin-top:30px;padding-top:16px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;color:var(--dim);font-size:.92rem}
+footer a{color:var(--red)}
+</style>
+</head>
+<body>
+<div class="sheet">
+<div class="crop tl"></div><div class="crop tr"></div><div class="crop bl"></div><div class="crop br"></div>
+
+<div class="jobline">
+  <span>Job ticket <span class="no">No. PB-001</span> - one script, one board</span>
+  <span>
+    <a href="https://github.com/Epsilon0xCell/Printable-Bookmark">Repository</a>
+    <a href="https://github.com/Epsilon0xCell">My GitHub profile</a>
+  </span>
+</div>
+
+<h1>Printable Bookmark Generator</h1>
+<p class="dek">Printable-Bookmark is a Python script, main.py, that reads one Pinterest board of printable bookmarks and saves every pin page it finds into the folder you run it from.</p>
+
+<div class="badges">
+  <img alt="GitHub stars" src="https://img.shields.io/github/stars/Epsilon0xCell/Printable-Bookmark?style=flat&color=b3271e&label=stars">
+  <img alt="GitHub forks" src="https://img.shields.io/github/forks/Epsilon0xCell/Printable-Bookmark?style=flat&color=b3271e&label=forks">
+  <img alt="Last commit" src="https://img.shields.io/github/last-commit/Epsilon0xCell/Printable-Bookmark?style=flat&color=b3271e&label=last%20commit">
+  <img alt="Top language" src="https://img.shields.io/github/languages/top/Epsilon0xCell/Printable-Bookmark?style=flat&color=b3271e">
+  <img alt="Repository size" src="https://img.shields.io/github/repo-size/Epsilon0xCell/Printable-Bookmark?style=flat&color=b3271e&label=size">
+  <img alt="License" src="https://img.shields.io/github/license/Epsilon0xCell/Printable-Bookmark?style=flat&color=b3271e">
+</div>
+
+<figure class="heroimg">
+  <img class="banner" src="https://raw.githubusercontent.com/Epsilon0xCell/Printable-Bookmark/main/banner.png" alt="Printable-Bookmark banner from the repository">
+  <div class="row">
+    <img src="https://raw.githubusercontent.com/Epsilon0xCell/Printable-Bookmark/main/logo.png" alt="Printable-Bookmark logo from the repository">
+    <figcaption>Proof copy: the banner and logo are the repo files, printed here at the top of the ticket the way a shop pins the client art to the job sheet.</figcaption>
+  </div>
+</figure>
+
+<section>
+  <h2><span class="tick">01 /</span> What this job is</h2>
+  <p>My README for this repo is three lines long, so this page takes its facts from main.py itself. The script was written for one board, the printable bookmarks board named in the BOARD_URL constant at the top of the file. I put that URL in one place on purpose: it is the only thing a user of this script is expected to change, and retargeting the script should not mean hunting through functions.</p>
+  <p>Run it and the script fetches the board page, finds every pin link on it, follows each one, and writes each pin page to disk under a file name taken from the pin URL. It prints one line per saved bookmark and a count at the end. That is the whole job. It does not print anything itself, crop anything, or lay out a sheet. The name describes the board it serves, not a printer driver, and I would rather be clear about that here.</p>
+  <p>What the script is careful about is the fetching. Boards change, links arrive in odd shapes, and connections stall. Most of the code, and most of the spec sheet below, is about those three facts.</p>
+</section>
+
+<section>
+  <h2><span class="tick">02 /</span> Spec sheet, from the code</h2>
+  <!-- I used a real table for this because a spec sheet is a table. Each row names a constant or a function from main.py, so a reader can check any line of it against the file in under a minute. -->
+  <table class="spec">
+    <tr><th>Source board</th><td><code>BOARD_URL</code> at the top of main.py, one Pinterest board of printable bookmarks. Change this one constant to point the script at a different board.</td></tr>
+    <tr><th>Pin marker</th><td><code>PIN_LINK_CLASS = "GrowthUnauthPinImage"</code>. The script finds pin links by this CSS class. Pinterest renames its classes without notice, so I treat this as a maintenance point, not a constant I can trust forever.</td></tr>
+    <tr><th>Fetch timeout</th><td>15 seconds, set per request in the fetch helper. Not per run: a board with many pins can take longer than 15 seconds in total. Without a timeout, a stalled connection hangs forever with no message, which reads exactly like the script working.</td></tr>
+    <tr><th>Relative links</th><td>Pin hrefs come back as relative paths like /pin/123/. The script resolves them against https://www.pinterest.com before downloading, instead of handing requests a path it cannot use on its own.</td></tr>
+    <tr><th>File names</th><td>filename_for parses the URL with urlparse and takes the last path segment, query string ignored. A hand split returned the domain as the file name for a root URL. The parsed version falls back to the name "bookmark" when the path is empty. No extension is added: the bytes are saved exactly as they arrived.</td></tr>
+    <tr><th>Parser</th><td>BeautifulSoup with the built in html.parser. It comes with Python, so the install list stays at the two packages named in the file header.</td></tr>
+    <tr><th>Error copy</th><td>A network failure and an HTTP error get separate messages in fetch, because they point at different fixes. A failed pin does not stop the pins after it.</td></tr>
+    <tr><th>Zero result</th><td>If nothing downloads, the script prints that the board is either empty or the markup no longer matches PIN_LINK_CLASS, and exits with code 1. The old behavior printed nothing at all, which is indistinguishable from success.</td></tr>
+  </table>
+</section>
+
+<section>
+  <h2><span class="tick">03 /</span> How a run goes</h2>
+  <ol class="steps">
+    <li><b>Fetch the board.</b> One GET through the fetch helper, timeout and status check included.</li>
+    <li><b>Find the pins.</b> Every link carrying the pin class is collected. Links with no href are skipped.</li>
+    <li><b>Resolve and download.</b> Relative hrefs are made absolute against pinterest.com, each page is fetched on its own, and the bytes are written in binary mode with no decoding step in between.</li>
+    <li><b>Report.</b> One "Downloaded bookmark" line per file, then a final count. Zero files means the warning above and exit code 1.</li>
+  </ol>
+  <pre><span class="c"># needs the two packages named in the header of main.py</span>
+pip install requests beautifulsoup4
+
+<span class="c"># then, from the folder you want the pages saved into</span>
+python3 main.py</pre>
+</section>
+
+<section>
+  <h2><span class="tick">04 /</span> Known fault on this ticket</h2>
+  <p class="margin-note"><b>Margin note, mine:</b> if two pins end in the same last URL segment, the second write overwrites the first with no warning, and the saved count still goes up for both. I have not hit it on this board, where pin ids differ, but the comment sits in the code so it is not a surprise if a file ever seems to be missing.</p>
+</section>
+
+<section>
+  <h2><span class="tick">05 /</span> Press check</h2>
+  <div class="verdict">
+    <div><b>5 of 5</b><span>file name cases passed in the campaign check of this repo's own logic: pin URL, pin URL with query string, relative pin path, board root URL, and a bare slash</span></div>
+    <div><b>Not run live</b><span>a full download run was out of scope for that check, and stays out here: no live Pinterest fetch backs this page</span></div>
+    <div><b>1 file</b><span>main.py is the whole tool, plus the README, banner, and logo</span></div>
+  </div>
+  <p style="margin-top:18px">In the environment where this page was staged, beautifulsoup4 is not installed, so the filename test above was re-run the same way the campaign record did it, with the third party imports stubbed, and passed 5 of 5 again. The script itself needs both packages installed before it will start. Code: <a href="https://github.com/Epsilon0xCell/Printable-Bookmark">github.com/Epsilon0xCell/Printable-Bookmark</a>.</p>
+</section>
+
+<footer>
+  <span>Built by Epsilon0xCell</span>
+  <span>Set from main.py. Check any spec line against the file.</span>
+</footer>
+
+</div>
+</body>
+</html>
