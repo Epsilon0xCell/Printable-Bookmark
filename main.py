@@ -14,7 +14,7 @@ def find_printable_bookmarks(url):
 def download_printable_bookmark(url):
     response = requests.get(url)
     if response.status_code == 200:
-        file_name = url.split('/')[-1]
+        file_name = url.rstrip('/').split('/')[-1] or 'bookmark'
         with open(file_name, 'wb') as f:
             f.write(response.content)
             print(f"Downloaded bookmark: {file_name}")
