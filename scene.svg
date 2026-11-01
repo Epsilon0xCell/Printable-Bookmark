@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 340" role="img" aria-label="Cutaway of one pantry shelf: bubbles breaking in the first crock, the cloth swelling on the second, the third resting still">
+<rect width="1200" height="340" fill="#4a3a2a"/>
+<rect x="60" y="40" width="1080" height="230" fill="#6a5138"/>
+<rect x="1010" y="60" width="90" height="120" fill="#e8dfbc">
+<animate attributeName="opacity" dur="24s" repeatCount="indefinite" values="0.65;1;0.65"/>
+</rect>
+<g fill="#3d2c1e"><rect x="240" y="70" width="34" height="150"/><rect x="520" y="70" width="30" height="150"/><rect x="790" y="70" width="36" height="150"/></g>
+<g>
+<ellipse cx="330" cy="238" rx="86" ry="34" fill="#e6d2a4"/>
+<rect x="252" y="150" width="156" height="80" fill="#eee0b6"/>
+<rect x="256" y="168" width="148" height="13" fill="#3a548c"/>
+<ellipse cx="330" cy="150" rx="78" ry="16" fill="#c6d2a8"/>
+<g fill="none" stroke="#fafaf0" stroke-width="3">
+<ellipse cx="300" cy="148" r="5"><animate attributeName="r" dur="4s" repeatCount="indefinite" values="2;7;7"/><animate attributeName="opacity" dur="4s" repeatCount="indefinite" values="1;1;0"/></ellipse>
+<ellipse cx="338" cy="152" r="4"><animate attributeName="r" dur="5.5s" begin="1.4s" repeatCount="indefinite" values="2;6;6"/><animate attributeName="opacity" dur="5.5s" begin="1.4s" repeatCount="indefinite" values="1;1;0"/></ellipse>
+<ellipse cx="362" cy="146" r="4"><animate attributeName="r" dur="6.5s" begin="2.6s" repeatCount="indefinite" values="2;6;6"/><animate attributeName="opacity" dur="6.5s" begin="2.6s" repeatCount="indefinite" values="1;1;0"/></ellipse>
+</g>
+</g>
+<g>
+<ellipse cx="620" cy="238" rx="86" ry="34" fill="#e6d2a4"/>
+<rect x="542" y="150" width="156" height="80" fill="#eee0b6"/>
+<rect x="546" y="168" width="148" height="13" fill="#3a548c"/>
+<g>
+<animateTransform attributeName="transform" type="scale" dur="12s" repeatCount="indefinite" values="1 1; 1.04 1.12; 1 1" additive="sum"/>
+<path d="M548 152 Q 620 118 692 152 L 684 168 L 556 168 Z" fill="#e2dccb" stroke="#968e78" stroke-width="2">
+<animate attributeName="d" dur="12s" repeatCount="indefinite" values="M548 152 Q 620 118 692 152 L 684 168 L 556 168 Z; M548 152 Q 620 104 692 152 L 684 168 L 556 168 Z; M548 152 Q 620 118 692 152 L 684 168 L 556 168 Z"/>
+</path>
+</g>
+</g>
+<g>
+<ellipse cx="910" cy="238" rx="86" ry="34" fill="#e6d2a4"/>
+<rect x="832" y="150" width="156" height="80" fill="#eee0b6"/>
+<rect x="836" y="168" width="148" height="13" fill="#3a548c"/>
+<ellipse cx="910" cy="146" rx="80" ry="15" fill="#9c6e42" stroke="#5e3c22" stroke-width="3"/>
+<ellipse cx="910" cy="128" rx="17" ry="11" fill="#ba8454" stroke="#5e3c22" stroke-width="2"/>
+</g>
+<rect x="40" y="262" width="1120" height="16" fill="#966038"/>
+<g stroke="#c8b088" stroke-width="2">
+<g><animateTransform attributeName="transform" type="rotate" dur="5s" repeatCount="indefinite" values="-2 200 278; 2 200 278; -2 200 278"/><line x1="200" y1="278" x2="200" y2="300"/><polygon points="182,300 224,300 224,330 182,330" fill="#f2ead6" stroke="#1e1c1a" stroke-width="2"/></g>
+<g><animateTransform attributeName="transform" type="rotate" dur="7s" repeatCount="indefinite" values="2 480 278; -2 480 278; 2 480 278"/><line x1="480" y1="278" x2="480" y2="300"/><polygon points="462,300 504,300 504,330 462,330" fill="#f2ead6" stroke="#1e1c1a" stroke-width="2"/></g>
+<g><animateTransform attributeName="transform" type="rotate" dur="6s" repeatCount="indefinite" values="-1.5 760 278; 1.5 760 278; -1.5 760 278"/><line x1="760" y1="278" x2="760" y2="300"/><polygon points="742,300 784,300 784,330 742,330" fill="#f2ead6" stroke="#1e1c1a" stroke-width="2"/></g>
+</g>
+</svg>

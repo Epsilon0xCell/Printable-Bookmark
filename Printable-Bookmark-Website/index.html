@@ -1,312 +1,81 @@
 <!DOCTYPE html>
-<!-- pages-campaign site for Epsilon0xCell/Printable-Bookmark; source of truth: Printable-Bookmark-Website/ on the default branch -->
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Printable-Bookmark on the cutting table</title>
+<title>Printable-Bookmark: the pantry shelf catalogue</title>
+<meta name="description" content="Printable-Bookmark is a Python script that downloads the pin pages linked from one Pinterest board devoted to printable bookmarks. This page catalogues what the script does, shelf by shelf.">
 <style>
-/* I built this page as a cutting table because the honest shape of this project is a sheet and a strip: one board comes in, files come out one at a time, and a long thin bookmark is the reason the board exists at all. The table is wide, the sheet sits on it off center, and the strip stays down the side the whole way. */
-:root{
-  --table:#2f2a24; --mat:#274435; --matline:#35594a;
-  --stock:#f6efdd; --stock2:#efe5cf; --ink:#211c15; --dim:#6a5f4d;
-  --cut:#b3271e; --pencil:#8a7d63; --codebg:#211c15; --codefg:#f3ead2;
-}
+@font-face{font-family:'Amatic SC';src:url('fonts/AmaticSC-Bold.ttf') format('truetype')}
+@font-face{font-family:'Barlow';src:url('fonts/Barlow-Regular.ttf') format('truetype')}
 *{box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{margin:0;background:var(--table);color:var(--ink);font-family:"Segoe UI",system-ui,-apple-system,Arial,sans-serif;line-height:1.6}
-a{color:var(--cut)}
-/* I put a faint grid on the table surface because a cutting mat has one. It sits behind everything and never under the text on the sheet itself. */
-.tabletop{max-width:1240px;margin:0 auto;padding:28px 22px 46px;background:repeating-linear-gradient(0deg,transparent,transparent 47px,rgba(255,255,255,.045) 48px),repeating-linear-gradient(90deg,transparent,transparent 47px,rgba(255,255,255,.045) 48px),var(--mat);background-color:var(--mat)}
-@media(max-width:640px){.tabletop{padding:14px 10px 30px}}
-header.top{color:#f6efdd;display:flex;gap:20px;align-items:flex-start;flex-wrap:wrap;padding:8px 6px 22px}
-header.top img.logo{width:76px;height:76px;object-fit:contain;background:var(--stock);padding:6px;border:1px solid #101010}
-header.top .headtext{flex:1;min-width:260px}
-.eyebrow{letter-spacing:.18em;text-transform:uppercase;font-size:.78rem;color:#d8cba6;margin:0 0 6px}
-h1{font-family:Palatino,"Palatino Linotype","Book Antiqua",Georgia,serif;font-size:2.7rem;line-height:1.05;margin:0 0 10px;font-weight:700}
-.dek{max-width:44rem;margin:0;color:#e9dfc6;font-size:1.05rem}
-nav.links{margin-top:14px;display:flex;gap:18px;flex-wrap:wrap}
-nav.links a{color:#fff;text-decoration:none;border-bottom:2px solid var(--cut);padding-bottom:2px}
-.badges{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0 0}
-.badges img{height:20px;display:block}
-figure.banner{margin:0 0 26px;background:var(--stock);padding:12px;border:1px solid #141210}
-figure.banner img{width:100%;display:block}
-figure.banner figcaption{color:var(--dim);font-size:.9rem;padding-top:9px}
-/* This is the layout that makes this page different from a spec sheet: a wide main column framed as a sheet of stock, and the specimen strip as a second, persistent column. On a phone the strip moves above the sheet instead of squeezing it. */
-.layout{display:grid;grid-template-columns:minmax(0,1fr) 248px;gap:26px;align-items:start}
-@media(max-width:900px){.layout{grid-template-columns:1fr}}
-.sheet{background:var(--stock);position:relative;padding:44px 46px 40px;box-shadow:0 4px 18px rgba(0,0,0,.35)}
-@media(max-width:640px){.sheet{padding:34px 22px 30px}}
-/* My crop marks sit outside the reading area at the four corners of the sheet. I drew them as short paired rules, the marks a cutter actually follows, not as a frame. */
-.crop{position:absolute;width:26px;height:26px;pointer-events:none}
-.crop.tl{top:12px;left:12px;border-top:2px solid var(--ink);border-left:2px solid var(--ink)}
-.crop.tr{top:12px;right:12px;border-top:2px solid var(--ink);border-right:2px solid var(--ink)}
-.crop.bl{bottom:12px;left:12px;border-bottom:2px solid var(--ink);border-left:2px solid var(--ink)}
-.crop.br{bottom:12px;right:12px;border-bottom:2px solid var(--ink);border-right:2px solid var(--ink)}
-.sheet section{padding:26px 0 6px;border-top:1px solid #d8cba6}
-.sheet section:first-child{border-top:0;padding-top:4px}
-h2{font-family:Palatino,"Palatino Linotype",Georgia,serif;font-size:1.55rem;line-height:1.2;margin:0 0 12px}
-h2 .step{color:var(--cut);font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.82rem;letter-spacing:.14em;display:block;text-transform:uppercase;margin-bottom:5px}
-p{max-width:42rem}
-ul.plain{max-width:42rem;padding-left:20px}
-ul.plain li{margin-bottom:8px}
-code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.92em}
-pre{background:var(--codebg);color:var(--codefg);padding:16px 18px;overflow-x:auto;font-size:.88rem;line-height:1.55;margin:14px 0}
-pre .ln{color:#a5936f;user-select:none}
-pre .note{color:#c9b98f}
-table.numbers{border-collapse:collapse;width:100%;margin:14px 0;font-size:.96rem}
-table.numbers th,table.numbers td{border:1px solid var(--ink);padding:9px 12px;text-align:left;vertical-align:top}
-table.numbers th{background:var(--stock2);width:34%}
-.fault{border-left:5px solid var(--cut);background:#f3e7d3;padding:14px 18px;max-width:44rem}
-.fault b{color:var(--cut)}
-/* The strip is sticky on a wide screen so the thing this project is named for stays in view while the steps scroll past it. */
-aside.stripcol{position:sticky;top:18px}
-@media(max-width:900px){aside.stripcol{position:static}}
-.stripwrap{background:var(--stock);padding:16px 14px 12px;border:1px solid #141210}
-.stripwrap h2{font-size:1.05rem}
-.stripwrap p{font-size:.9rem;color:var(--dim)}
-.specimen{position:relative;display:block;width:100%;height:auto}
-.specimen .cutline{stroke:var(--cut);stroke-width:2;stroke-dasharray:7 6;fill:none}
-/* I animate the cut lines once, as a stroke drawing itself, because that is the one motion this theme has honestly earned. Nothing loops. */
-html.js .specimen .cutline{stroke-dasharray:7 6;animation:drawcut 1.6s ease-out 1}
-@keyframes drawcut{from{stroke-dashoffset:90}to{stroke-dashoffset:0}}
-.measure{position:absolute;inset:12px;background:rgba(33,28,21,.94);color:#f6efdd;padding:14px;font-size:.86rem;line-height:1.5;opacity:0;pointer-events:none;transition:opacity .18s ease}
-.stripwrap:hover .measure,.stripwrap:focus-within .measure{opacity:1;pointer-events:auto}
-.measure b{color:#fff}
-.stripnote{font-size:.86rem}
-/* I lay the reference sheets out staggered, wide then offset, because they were pinned to a table, not filed in a grid. Each one keeps its own caption next to the sheet it describes. */
-figure.sheetfig{margin:26px 0;background:#fffdf6;border:1px solid #d8cba6;padding:12px}
-figure.sheetfig.offset{margin-left:7%}
-@media(max-width:640px){figure.sheetfig.offset{margin-left:0}}
-figure.sheetfig img{width:100%;display:block}
-figure.sheetfig figcaption{color:var(--dim);font-size:.92rem;padding-top:9px;max-width:40rem}
-figure.sheetfig figcaption b{color:var(--ink)}
-/* My reveals only exist if JavaScript turned them on. With JavaScript off, or before the observer runs, every section is already readable in full. */
-html.js .reveal{opacity:0;transform:translateY(10px);transition:opacity .45s ease,transform .45s ease}
-html.js .reveal.seen{opacity:1;transform:none}
-footer{color:#e9dfc6;padding:22px 6px 0;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:.93rem}
-footer a{color:#fff}
-@media (prefers-reduced-motion: reduce){
-  html{scroll-behavior:auto}
-  html.js .specimen .cutline{animation:none}
-  html.js .reveal{opacity:1;transform:none;transition:none}
-  .measure{transition:none}
-}
+body{margin:0;background:#f2e4bc;color:#1e1c1a;font-family:'Barlow',sans-serif;line-height:1.6}
+.wrap{max-width:940px;margin:0 auto;padding:30px 22px 44px}
+.hero img{width:100%;height:auto;display:block}
+h1{font-family:'Amatic SC',cursive;font-size:3.2rem;margin:.25em 0 .05em;line-height:1}
+h2{font-family:'Amatic SC',cursive;font-size:2.1rem;margin:0 0 .3em;line-height:1.05}
+.shelf{background:#966038;padding:14px 16px 18px;margin:22px 0}
+.shelf .inner{background:#f6eed2;padding:16px 20px}
+.shelfnum{font-family:'Amatic SC',cursive;color:#607a48;font-size:1.4rem}
+.tag{display:inline-block;background:#f6eed2;color:#1e1c1a;font-family:'Barlow',sans-serif;padding:.5em 1.2em .5em 1em;text-decoration:none;border:2px solid #966038;border-right:none;clip-path:polygon(0 0,calc(100% - 16px) 0,100% 16px,100% 100%,0 100%);position:relative;margin:.2em .3em .2em 0;transition:transform .15s}
+.tag:hover{transform:rotate(1.5deg)}
+.tag:active{transform:rotate(0)}
+.tag:focus-visible{outline:3px dashed #966038;outline-offset:4px}
+a.dill{color:#1e1c1a}
+a.dill::before{content:'';display:inline-block;width:.55em;height:.55em;border-radius:50%;background:#607a48;margin-right:.5em;box-shadow:.28em -.14em 0 #607a48,-.28em -.14em 0 #607a48,0 -.3em 0 #607a48}
+a.dill:visited::before{background:#966038}
+.bubbles{border:0;height:22px;margin:8px 0;background-image:radial-gradient(circle at 12% 70%,#a9bc8e 4px,transparent 5px),radial-gradient(circle at 34% 40%,#a9bc8e 3px,transparent 4px),radial-gradient(circle at 57% 76%,#a9bc8e 5px,transparent 6px),radial-gradient(circle at 79% 46%,#a9bc8e 3px,transparent 4px),radial-gradient(circle at 93% 66%,#a9bc8e 4px,transparent 5px)}
+code{background:#2a2118;color:#f2e4bc;padding:.08em .4em}
+pre{background:#2a2118;color:#f2e4bc;padding:14px 18px;overflow-x:auto}
+.caution{border-left:6px solid #966038;background:#f6eed2;padding:12px 18px;margin:14px 0}
+footer{font-size:.92rem;padding-top:8px}
 </style>
 </head>
 <body>
-<div class="tabletop">
-
-<header class="top">
-  <img class="logo" src="https://raw.githubusercontent.com/Epsilon0xCell/Printable-Bookmark/main/logo.png" alt="Printable-Bookmark logo from the repository">
-  <div class="headtext">
-    <p class="eyebrow">On the cutting table: one script, one board, one strip at a time</p>
-    <h1>Printable-Bookmark</h1>
-    <p class="dek">I wrote a small Python script, main.py, that reads one Pinterest board of printable bookmarks, follows every pin link on it, and saves each pin page into the folder I run it from. This page lays that work out on the table, step by step, with the numbers taken from the code.</p>
-    <nav class="links">
-      <a href="https://github.com/Epsilon0xCell/Printable-Bookmark">Repository</a>
-      <a href="https://github.com/Epsilon0xCell">My GitHub profile</a>
-      <a href="#fault">The known fault</a>
-      <a href="#sheets">Reference sheets</a>
-    </nav>
-    <div class="badges">
-      <img alt="GitHub stars" src="https://img.shields.io/github/stars/Epsilon0xCell/Printable-Bookmark?style=flat&color=b3271e&label=stars">
-      <img alt="GitHub forks" src="https://img.shields.io/github/forks/Epsilon0xCell/Printable-Bookmark?style=flat&color=b3271e&label=forks">
-      <img alt="Last commit" src="https://img.shields.io/github/last-commit/Epsilon0xCell/Printable-Bookmark?style=flat&color=b3271e&label=last%20commit">
-      <img alt="Top language" src="https://img.shields.io/github/languages/top/Epsilon0xCell/Printable-Bookmark?style=flat&color=b3271e">
-      <img alt="Repository size" src="https://img.shields.io/github/repo-size/Epsilon0xCell/Printable-Bookmark?style=flat&color=b3271e&label=size">
-      <img alt="License MIT" src="https://img.shields.io/github/license/Epsilon0xCell/Printable-Bookmark?style=flat&color=b3271e">
-    </div>
-  </div>
+<div class="wrap">
+<header class="hero">
+<img src="https://raw.githubusercontent.com/Epsilon0xCell/Printable-Bookmark/main/intro-banner.png" alt="A fermentation pantry before any preserving starts, shelves of crocks and one great crock on the table">
+<h1>Printable-Bookmark</h1>
+<p>The pantry shelf catalogue. One shelf per fact, cataloguing what the script in this repository genuinely does, because its own README is only two lines long and the code has to speak for it.</p>
+<p><a class="tag" href="https://github.com/Epsilon0xCell/Printable-Bookmark">The repo on GitHub</a> <a class="tag" href="#method">The preserving sequence</a></p>
 </header>
-
-<figure class="banner">
-  <img src="https://raw.githubusercontent.com/Epsilon0xCell/Printable-Bookmark/main/banner.png" alt="Printable-Bookmark banner from the repository">
-  <figcaption>The repo banner, laid at the head of the table. The logo at the top left is the repo logo file. Both are the files from this repo, pulled by their raw addresses, not copies stored in the site folder.</figcaption>
-</figure>
-
-<div class="layout">
-<main class="sheet">
-  <div class="crop tl"></div><div class="crop tr"></div><div class="crop bl"></div><div class="crop br"></div>
-
-  <section class="reveal">
-    <h2><span class="step">First, what this is</span>The sheet on the table</h2>
-    <p>My README for this repo is only a title, Printable Bookmark Generator, under the banner. So this page takes its facts from main.py itself, all 137 lines of it. The docstring at the top of the file says what the script does in its own words: it reads the board page, follows every pin link it finds, and saves each pin page into the current folder under the last part of its URL.</p>
-    <p>That matters for how I describe it here. The name describes the board the script serves. The script itself does not crop an image, lay out a printed page, or make a PDF. It fetches pages and writes files. I would rather say that plainly on the page than let the repo name promise a print step the code never takes.</p>
-    <p>Run it with <code>python3 main.py</code>, from the folder where I want the pages saved. It needs two packages, named in the header of the file: requests and beautifulsoup4.</p>
-    <pre><span class="note"># lines 7 to 8 of main.py, in the file header</span>
-Run it with:  python3 main.py
-Requires:     requests, beautifulsoup4  (pip install requests beautifulsoup4)</pre>
-  </section>
-
-  <section class="reveal">
-    <h2><span class="step">Step one, what goes in</span>The board and the fetch</h2>
-    <p>One board goes in. I keep its address in one constant at the top of the file because it is the only thing a user of this script is expected to change. If I scattered it through the functions, retargeting the script would mean hunting.</p>
-    <pre><span class="ln">18 </span>BOARD_URL = "https://www.pinterest.com/karenfrye376/printable-bookmarks/"
-<span class="ln">25 </span>PIN_LINK_CLASS = "GrowthUnauthPinImage"
-<span class="ln">31 </span>TIMEOUT = 15</pre>
-    <p>Those three lines run the whole job. The board is the printable-bookmarks board at that address. Pins are found by one CSS class, <code>GrowthUnauthPinImage</code>. Every request gets a timeout of 15 seconds, set per request, not for the whole run, so a board with many pins can still take longer than 15 seconds in total.</p>
-    <p>I treat the class name as a maintenance point, not a constant I can trust. Pinterest renames its classes without notice. When that happens, the script finds no pins and says so, instead of quietly saving nothing.</p>
-    <p>Every fetch goes through one helper. It checks the status in one place, and it keeps a network error and an HTTP error as separate messages, since they point at different fixes.</p>
-    <pre><span class="ln">40 </span>    try:
-<span class="ln">41 </span>        response = requests.get(url, timeout=TIMEOUT)
-<span class="ln">42 </span>    except requests.RequestException as exc:
-<span class="ln">43 </span>        print(f"Could not load {url}: {exc}")
-<span class="ln">44 </span>        return None
-<span class="ln">45 </span>    if response.status_code != 200:
-<span class="ln">46 </span>        print(f"Could not load {url}: HTTP {response.status_code}")
-<span class="ln">47 </span>        return None
-<span class="ln">48 </span>    return response</pre>
-    <p>It is a GET only script. Nothing in main.py posts, uploads, or sends form data anywhere. The board page is fetched once, then each pin page is fetched on its own, and a failed pin prints its reason and does not stop the pins after it.</p>
-  </section>
-
-  <section class="reveal">
-    <h2><span class="step">Step two, across the table</span>How each file is laid down</h2>
-    <p>There is no sheet layout step to show, and I checked again before writing this page: main.py contains no page size, no margin, no image placement, and no print command. What it lays down is files, one per pin, and the care in this step is in the naming and the writing.</p>
-    <table class="numbers">
-      <tr><th>Source</th><td>1 board, <code>BOARD_URL</code>, line 18. Pin links are the links carrying <code>PIN_LINK_CLASS</code>, found at line 106 with <code>soup.find_all("a", {"class": PIN_LINK_CLASS})</code>.</td></tr>
-      <tr><th>Parser</th><td>BeautifulSoup with the built in <code>html.parser</code>, line 99. I used the parser that comes with Python so the install list stays at the two packages in the header.</td></tr>
-      <tr><th>Relative links</th><td>Pin hrefs can be relative paths. At lines 110 to 111, a href starting with <code>/</code> gets <code>https://www.pinterest.com</code> put in front of it before it is fetched.</td></tr>
-      <tr><th>Timeout</th><td>15 seconds per request, line 31, passed at line 41.</td></tr>
-      <tr><th>File name</th><td>The last path segment of the pin URL, parsed with urlparse. The fallback name, when the path is empty, is <code>bookmark</code>.</td></tr>
-      <tr><th>Extension added</th><td>None. Zero. The comment at lines 64 to 66 says why: the pin page bytes are saved exactly as they arrived, and guessing an extension would claim a format I never checked.</td></tr>
-      <tr><th>Write mode</th><td>Binary, <code>"wb"</code>, at line 85. No decoding step sits between the response and the file.</td></tr>
-    </table>
-    <p>The naming function strips the trailing slash before it takes the last segment. An earlier version that skipped that step got an empty name and crashed when it tried to write the file. That is written in the code at lines 61 to 63, and it is why the strip step uses urlparse instead of splitting the address by hand.</p>
-    <pre><span class="ln">67 </span>    path = urlparse(url).path.rstrip("/")
-<span class="ln">68 </span>    name = path.rsplit("/", 1)[-1]
-<span class="ln">69 </span>    return name or "bookmark"</pre>
-    <pre><span class="ln">85 </span>    with open(file_name, "wb") as fh:
-<span class="ln">86 </span>        fh.write(response.content)
-<span class="ln">87 </span>    print(f"Downloaded bookmark: {file_name}")
-<span class="ln">88 </span>    return True</pre>
-  </section>
-
-  <section class="reveal">
-    <h2><span class="step">Step three, what comes out</span>Files in the folder, lines on the screen</h2>
-    <p>What comes out is one saved file per downloaded pin, in the current folder, named as above, holding the pin page bytes exactly as they arrived. Plus two kinds of printed line: one per file, shown in the capture above at line 87, and one count at the end.</p>
-    <p>If nothing downloads, the script does not stay silent. That used to be the behavior, and silent success and silent failure look the same. Now it prints which thing most likely happened and returns 1, so a script chaining off this one can tell the run saved nothing.</p>
-    <pre><span class="ln">128 </span>        print("No bookmarks downloaded. Either the board is empty or "
-<span class="ln">129 </span>              "Pinterest changed its page markup; check the board in a "
-<span class="ln">130 </span>              "browser.")
-<span class="ln">131 </span>        return 1
-<span class="ln">132 </span>    print(f"Done: {saved} bookmark(s) downloaded.")
-<span class="ln">133 </span>    return 0</pre>
-    <p>I show those printed lines as code, read from main.py, not as output from a run. I did not run the fetch for this page. The board is an outside site, and this rebuild stays inside this repo and its own pages. The run story on this page is told from the code, and I label it that way because a capture I did not make would be a lie in a nicer frame.</p>
-  </section>
-
-  <section class="reveal" id="fault">
-    <h2><span class="step">The mark in the margin</span>Known fault, still in the code</h2>
-    <div class="fault">
-      <p><b>It still happens at the current head.</b> If two pins end in the same last URL segment, the second write overwrites the first with no warning, and my count in the caller still goes up for both.</p>
-    </div>
-    <p>I rechecked this against the code instead of copying the old page. The comment in <code>download_printable_bookmark</code> at lines 80 to 84 states the limit in those words. The write at line 85 opens the file name in <code>"wb"</code> mode, which replaces an existing file of that name, and there is no check for an existing file anywhere in main.py. The function then returns True at line 88, and the caller counts it at lines 115 to 116. So a file can be missing while the final count says it was saved.</p>
-    <p>I have not hit it on this board, where pin ids differ. I keep the note on the page for the same reason I kept the comment in the code: so it is not a surprise if a saved file ever seems to be missing.</p>
-  </section>
-
-  <section class="reveal" id="sheets">
-    <h2><span class="step">Pinned to the table</span>Reference sheets from this repo</h2>
-    <p>These six sheets live in Printable-Bookmark-Visuals in this repo. They were drawn from the files in the repo, and I use them here as reference sheets laid beside the work. Their captions below say what each sheet is, in the words of the folder that holds them. They are drawings about the project. They are not output from main.py.</p>
-
-    <figure class="sheetfig">
-      <img src="https://raw.githubusercontent.com/Epsilon0xCell/Printable-Bookmark/main/Printable-Bookmark-Visuals/architecture.png" alt="Architecture reference sheet from the Printable-Bookmark visuals folder">
-      <figcaption><b>Architecture.</b> The put together: how the parts of this repo sit against each other, with real function names read out of the source.</figcaption>
-    </figure>
-    <figure class="sheetfig offset">
-      <img src="https://raw.githubusercontent.com/Epsilon0xCell/Printable-Bookmark/main/Printable-Bookmark-Visuals/data-flow.png" alt="Data flow reference sheet from the Printable-Bookmark visuals folder">
-      <figcaption><b>Data flow.</b> The data path in one direction, file to result: board page in, saved pin pages out.</figcaption>
-    </figure>
-    <figure class="sheetfig">
-      <img src="https://raw.githubusercontent.com/Epsilon0xCell/Printable-Bookmark/main/Printable-Bookmark-Visuals/flowchart.png" alt="Flowchart reference sheet from the Printable-Bookmark visuals folder">
-      <figcaption><b>Flowchart.</b> The run, from the entry file through the real steps the code takes, ending where the code ends.</figcaption>
-    </figure>
-    <figure class="sheetfig offset">
-      <img src="https://raw.githubusercontent.com/Epsilon0xCell/Printable-Bookmark/main/Printable-Bookmark-Visuals/product-map.png" alt="Product map reference sheet from the Printable-Bookmark visuals folder">
-      <figcaption><b>Product map.</b> What the project is for, what goes in, what comes out, and where it stops.</figcaption>
-    </figure>
-    <figure class="sheetfig">
-      <img src="https://raw.githubusercontent.com/Epsilon0xCell/Printable-Bookmark/main/Printable-Bookmark-Visuals/schematic.png" alt="Schematic reference sheet from the Printable-Bookmark visuals folder">
-      <figcaption><b>Schematic.</b> A second diagram of the same small system, drawn from the schematic sheet in the visuals folder.</figcaption>
-    </figure>
-    <figure class="sheetfig offset">
-      <img src="https://raw.githubusercontent.com/Epsilon0xCell/Printable-Bookmark/main/Printable-Bookmark-Visuals/statistics.png" alt="Statistics reference sheet from the Printable-Bookmark visuals folder">
-      <figcaption><b>Statistics.</b> Counts from the repo snapshot, drawn as bars a reader can check against the repo.</figcaption>
-    </figure>
-  </section>
-
-  <section class="reveal">
-    <h2><span class="step">Honest notes, in pencil</span>What I am not claiming</h2>
-    <ul class="plain">
-      <li>I made no fresh run of main.py for this page, and no local mode exists to run instead: the file takes no arguments and reads no local files. Every run detail here is read from the code.</li>
-      <li>main.py gives no page size, margin, or image size. I did not invent print dimensions for the strip beside this sheet, or anywhere else on this page.</li>
-      <li>The pin class name can break without any change on my side. If Pinterest renames it, the script saves nothing and exits with code 1, by design.</li>
-      <li>The host for relative links is written in two places, BOARD_URL and the prefix at line 111. If I ever point this at a board on a different host, I have to change both, or the relative links resolve to the wrong site. The code says that at lines 100 to 104, and it is still true.</li>
-      <li>The duplicate name fault above is open. I documented it in the code and on this page. I did not fix it in this website rebuild, because this rebuild does not touch main.py.</li>
-    </ul>
-    <p>Code: <a href="https://github.com/Epsilon0xCell/Printable-Bookmark">github.com/Epsilon0xCell/Printable-Bookmark</a>. The file to check is main.py. Any number on this page can be found in it by line.</p>
-  </section>
+<main>
+<div class="shelf"><div class="inner">
+<span class="shelfnum">Shelf one</span>
+<h2>The honest description</h2>
+<p>Printable-Bookmark is a Python script, run as <code>python3 main.py</code>, that downloads the pin pages linked from a single Pinterest board devoted to printable bookmarks. It saves pages. It does not design bookmarks, draw them, or lay them out for a printer, and this catalogue does not claim otherwise. Crocks keep food that somebody else grew; this script keeps pages that somebody else made.</p>
+</div></div>
+<hr class="bubbles">
+<div class="shelf"><div class="inner">
+<span class="shelfnum">Shelf two</span>
+<h2>The ingredients</h2>
+<p>Two Python packages and nothing else beyond the standard library: <code>requests</code> and <code>beautifulsoup4</code>. The built in <code>html.parser</code> does the parsing work on purpose, so the install list stays at two.</p>
+<pre>pip install requests beautifulsoup4
+python3 main.py</pre>
+</div></div>
+<hr class="bubbles">
+<div class="shelf" id="method"><div class="inner">
+<span class="shelfnum">Shelf three</span>
+<h2>The method, as a preserving sequence</h2>
+<p><b>First,</b> the board address is read from one constant at the top of main.py, <code>BOARD_URL</code>, the only thing a user is expected to change.</p>
+<p><b>Second,</b> fetch asks for a page with a 15 second timeout per request, and reports network failures and HTTP failures as separate messages.</p>
+<p><b>Third,</b> <code>find_printable_bookmarks</code> hunts the board markup for links carrying the pin class recorded in the constant <code>PIN_LINK_CLASS</code>, currently GrowthUnauthPinImage, and resolves relative links against the Pinterest host.</p>
+<p><b>Fourth,</b> <code>download_printable_bookmark</code> writes each pin page in binary, exactly as it arrived, under a file name taken from the last segment of its address by <code>filename_for</code>, with no extension invented. A URL with an empty path falls back to the name bookmark.</p>
+<p><b>Fifth,</b> the run counts only the saves that succeeded.</p>
+</div></div>
+<hr class="bubbles">
+<div class="shelf"><div class="inner">
+<span class="shelfnum">Shelf four</span>
+<h2>The keeping notes</h2>
+<div class="caution"><p>If two pins end in the same final segment, the later save overwrites the earlier one without warning, and the count still rises for both.</p></div>
+<div class="caution"><p>If nothing is saved, the script prints that the board may be empty or that Pinterest may have changed its markup, and it exits with status 1 rather than pretending success.</p></div>
+<div class="caution"><p>Changing the board means changing <code>BOARD_URL</code> and, for a different host, the hardcoded host used to resolve links as well. The pin link class name is a maintenance point that Pinterest can break without notice.</p></div>
+<p><a class="dill" href="https://github.com/Epsilon0xCell/Printable-Bookmark/blob/main/main.py">Read main.py itself, top to bottom</a></p>
+</div></div>
 </main>
-
-<aside class="stripcol">
-  <div class="stripwrap" tabindex="0">
-    <h2>The specimen strip</h2>
-    <!-- I drew this strip as an inline SVG because I needed a bookmark shape with cut lines I could animate, and no file in the repo is that shape. The numbers inside it are code numbers, not print measurements, and the note under it says so out loud. -->
-    <svg class="specimen" viewBox="0 0 200 620" role="img" aria-label="A long narrow bookmark strip with dashed cut lines, holding the code numbers from main.py">
-      <rect x="18" y="14" width="164" height="592" fill="#fffdf6" stroke="#211c15" stroke-width="2"></rect>
-      <path class="cutline" d="M18 14 H182 V606 H18 Z"></path>
-      <line class="cutline" x1="18" y1="118" x2="182" y2="118"></line>
-      <line class="cutline" x1="18" y1="300" x2="182" y2="300"></line>
-      <line class="cutline" x1="18" y1="470" x2="182" y2="470"></line>
-      <circle cx="100" cy="52" r="13" fill="none" stroke="#211c15" stroke-width="2"></circle>
-      <text x="100" y="96" text-anchor="middle" font-family="Georgia,serif" font-size="15" fill="#211c15">ONE BOARD IN</text>
-      <text x="100" y="150" text-anchor="middle" font-family="monospace" font-size="12" fill="#211c15">BOARD_URL</text>
-      <text x="100" y="172" text-anchor="middle" font-family="monospace" font-size="11" fill="#6a5f4d">line 18</text>
-      <text x="100" y="218" text-anchor="middle" font-family="Georgia,serif" font-size="15" fill="#211c15">ONE PIN AT A TIME</text>
-      <text x="100" y="252" text-anchor="middle" font-family="monospace" font-size="12" fill="#211c15">timeout 15</text>
-      <text x="100" y="274" text-anchor="middle" font-family="monospace" font-size="11" fill="#6a5f4d">seconds, line 31</text>
-      <text x="100" y="336" text-anchor="middle" font-family="Georgia,serif" font-size="15" fill="#211c15">NAMED BY ITS URL</text>
-      <text x="100" y="370" text-anchor="middle" font-family="monospace" font-size="11" fill="#211c15">last segment</text>
-      <text x="100" y="392" text-anchor="middle" font-family="monospace" font-size="11" fill="#6a5f4d">or: bookmark</text>
-      <text x="100" y="430" text-anchor="middle" font-family="monospace" font-size="11" fill="#6a5f4d">lines 67 to 69</text>
-      <text x="100" y="510" text-anchor="middle" font-family="Georgia,serif" font-size="15" fill="#211c15">SAVED AS IT ARRIVED</text>
-      <text x="100" y="544" text-anchor="middle" font-family="monospace" font-size="12" fill="#211c15">binary, no extension</text>
-      <text x="100" y="566" text-anchor="middle" font-family="monospace" font-size="11" fill="#6a5f4d">lines 85 to 86</text>
-    </svg>
-    <div class="measure" aria-label="Code numbers held in the strip">
-      <p><b>The numbers in this strip, checked:</b></p>
-      <p>1 board, line 18. 15 seconds per request, line 31. 1 pin class, line 25. 2 packages, lines 7 to 8. 0 extensions added, lines 64 to 66. 1 fallback name, bookmark, line 69.</p>
-      <p>Hover or focus shows this panel. It lists code numbers only.</p>
-    </div>
-    <p class="stripnote">I drew this strip long and narrow because a bookmark is long and narrow. I did not give it a scale in inches or millimetres. main.py contains no page size or margin to scale it from, so a scale label would be made up, and I do not put made up numbers on a specimen.</p>
-    <p class="stripnote">The dashed lines are the cut lines. They draw themselves once when the page loads. With reduced motion set, they sit still in their final state.</p>
-  </div>
-</aside>
-</div>
-
 <footer>
-  <span>Built by Epsilon0xCell</span>
-  <span>Set from main.py at the head named in my wave note. Check any line against the file.</span>
+<p>Colophon: fonts are Amatic SC and Barlow, both SIL Open Font License 1.1, license texts beside the font files. Frosty was a lettering reference only and is not embedded; nothing about frost belongs over a fermenting pantry.</p>
 </footer>
 </div>
-
-<script>
-/* I add the js class first thing in this script so the hidden reveal state only ever applies when JavaScript is actually running. Without JavaScript, the sheet is complete and readable as served. */
-document.documentElement.classList.add("js");
-/* I reveal each section once as it reaches the reader, in reading order, and I stop watching it after that. A section should not hide itself again on the way back up. */
-var revealItems = document.querySelectorAll(".reveal");
-if ("IntersectionObserver" in window) {
-  var watcher = new IntersectionObserver(function (entries) {
-    entries.forEach(function (entry) {
-      if (entry.isIntersecting) {
-        entry.target.classList.add("seen");
-        watcher.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.08 });
-  revealItems.forEach(function (item) { watcher.observe(item); });
-} else {
-  revealItems.forEach(function (item) { item.classList.add("seen"); });
-}
-</script>
 </body>
 </html>

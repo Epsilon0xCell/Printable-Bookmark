@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 84" role="img" aria-label="Separator: a shelf line with three crocks, the middle one lidless">
+<line x1="20" y1="62" x2="1180" y2="62" stroke="#7a5230" stroke-width="6"/>
+<g fill="#eee0b6" stroke="#1e1c1a" stroke-width="2">
+<rect x="420" y="22" width="56" height="38"/><ellipse cx="448" cy="20" rx="30" ry="9" fill="#9c6e42"/>
+<rect x="572" y="22" width="56" height="38"/><ellipse cx="600" cy="24" rx="28" ry="8" fill="#c6d2a8"/>
+<rect x="724" y="22" width="56" height="38"/><ellipse cx="752" cy="20" rx="30" ry="9" fill="#9c6e42"/>
+</g>
+</svg>
