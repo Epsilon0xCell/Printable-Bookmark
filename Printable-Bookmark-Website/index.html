@@ -1,81 +1,113 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Printable-Bookmark: the pantry shelf catalogue</title>
-<meta name="description" content="Printable-Bookmark is a Python script that downloads the pin pages linked from one Pinterest board devoted to printable bookmarks. This page catalogues what the script does, shelf by shelf.">
+<title>Printable-Bookmark: the herbarium press catalogue</title>
 <style>
-@font-face{font-family:'Amatic SC';src:url('fonts/AmaticSC-Bold.ttf') format('truetype')}
-@font-face{font-family:'Barlow';src:url('fonts/Barlow-Regular.ttf') format('truetype')}
-*{box-sizing:border-box}
-body{margin:0;background:#f2e4bc;color:#1e1c1a;font-family:'Barlow',sans-serif;line-height:1.6}
-.wrap{max-width:940px;margin:0 auto;padding:30px 22px 44px}
-.hero img{width:100%;height:auto;display:block}
-h1{font-family:'Amatic SC',cursive;font-size:3.2rem;margin:.25em 0 .05em;line-height:1}
-h2{font-family:'Amatic SC',cursive;font-size:2.1rem;margin:0 0 .3em;line-height:1.05}
-.shelf{background:#966038;padding:14px 16px 18px;margin:22px 0}
-.shelf .inner{background:#f6eed2;padding:16px 20px}
-.shelfnum{font-family:'Amatic SC',cursive;color:#607a48;font-size:1.4rem}
-.tag{display:inline-block;background:#f6eed2;color:#1e1c1a;font-family:'Barlow',sans-serif;padding:.5em 1.2em .5em 1em;text-decoration:none;border:2px solid #966038;border-right:none;clip-path:polygon(0 0,calc(100% - 16px) 0,100% 16px,100% 100%,0 100%);position:relative;margin:.2em .3em .2em 0;transition:transform .15s}
-.tag:hover{transform:rotate(1.5deg)}
-.tag:active{transform:rotate(0)}
-.tag:focus-visible{outline:3px dashed #966038;outline-offset:4px}
-a.dill{color:#1e1c1a}
-a.dill::before{content:'';display:inline-block;width:.55em;height:.55em;border-radius:50%;background:#607a48;margin-right:.5em;box-shadow:.28em -.14em 0 #607a48,-.28em -.14em 0 #607a48,0 -.3em 0 #607a48}
-a.dill:visited::before{background:#966038}
-.bubbles{border:0;height:22px;margin:8px 0;background-image:radial-gradient(circle at 12% 70%,#a9bc8e 4px,transparent 5px),radial-gradient(circle at 34% 40%,#a9bc8e 3px,transparent 4px),radial-gradient(circle at 57% 76%,#a9bc8e 5px,transparent 6px),radial-gradient(circle at 79% 46%,#a9bc8e 3px,transparent 4px),radial-gradient(circle at 93% 66%,#a9bc8e 4px,transparent 5px)}
-code{background:#2a2118;color:#f2e4bc;padding:.08em .4em}
-pre{background:#2a2118;color:#f2e4bc;padding:14px 18px;overflow-x:auto}
-.caution{border-left:6px solid #966038;background:#f6eed2;padding:12px 18px;margin:14px 0}
-footer{font-size:.92rem;padding-top:8px}
+@font-face{font-family:"IM Fell English SC";src:url("fonts/IMFellEnglishSC-Regular.ttf") format("truetype");font-weight:400;font-display:swap}
+@font-face{font-family:"Source Serif 4";src:url("fonts/SourceSerif4-Regular.ttf") format("truetype");font-weight:400;font-display:swap}
+@font-face{font-family:"Source Serif 4";src:url("fonts/SourceSerif4-Bold.ttf") format("truetype");font-weight:700;font-display:swap}
+:root{--cream:#f6eeda;--sheet:#fffaf0;--green:#3f5a2e;--deep:#2c3d20;--tan:#b09a6d;--inkblue:#5d6d8a;--line:#d8c9a8}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--cream);color:#33291d;font-family:"Source Serif 4",Georgia,serif;line-height:1.65}
+header{max-width:1060px;margin:0 auto;padding:2.6rem 1.2rem .6rem;text-align:center}
+header img.logo{width:150px;height:150px;border-radius:6px;border:1px solid var(--tan);box-shadow:0 4px 18px rgba(60,45,20,.25)}
+h1{font-family:"IM Fell English SC",serif;font-weight:400;font-size:clamp(2.2rem,5.5vw,3.4rem);color:var(--deep);margin-top:1rem}
+header p{max-width:46rem;margin:.6rem auto 0;color:#5b4c36;font-size:1.06rem}
+figure{max-width:1060px;margin:1.4rem auto 0;padding:0 1.2rem}
+figure img{width:100%;border:1px solid var(--tan);border-radius:4px;box-shadow:0 6px 22px rgba(60,45,20,.18)}
+main{max-width:1060px;margin:0 auto;padding:1rem 1.2rem 3rem}
+section{margin-top:1.6rem;background:var(--sheet);border:1px solid var(--line);border-radius:6px;padding:1.3rem 1.4rem}
+h2{font-family:"IM Fell English SC",serif;font-weight:400;font-size:1.6rem;color:var(--green);margin-bottom:.5rem}
+h3{font-family:"IM Fell English SC",serif;font-weight:400;font-size:1.25rem;color:var(--deep);margin:.9rem 0 .3rem}
+p{margin:.45rem 0}
+code{font-family:ui-monospace,Menlo,monospace;font-size:.92em;background:#efe6cf;padding:.05rem .35rem;border-radius:3px}
+ul{margin:.4rem 0 .4rem 1.3rem}
+li{margin:.25rem 0}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1rem;margin-top:.6rem}
+.grid div{border:1px solid var(--line);border-radius:5px;padding:.9rem 1rem;background:#fdf6e3}
+.grid b{color:var(--inkblue)}
+footer{border-top:1px solid var(--line);padding:1.2rem;text-align:center;color:#6d5c40;font-size:.95rem}
+footer img{max-width:760px;width:100%;border:1px solid var(--tan);border-radius:4px}
 </style>
 </head>
 <body>
-<div class="wrap">
-<header class="hero">
-<img src="https://raw.githubusercontent.com/Epsilon0xCell/Printable-Bookmark/main/intro-banner.png" alt="A fermentation pantry before any preserving starts, shelves of crocks and one great crock on the table">
-<h1>Printable-Bookmark</h1>
-<p>The pantry shelf catalogue. One shelf per fact, cataloguing what the script in this repository genuinely does, because its own README is only two lines long and the code has to speak for it.</p>
-<p><a class="tag" href="https://github.com/Epsilon0xCell/Printable-Bookmark">The repo on GitHub</a> <a class="tag" href="#method">The preserving sequence</a></p>
+<header>
+<img class="logo" src="https://raw.githubusercontent.com/Epsilon0xCell/Printable-Bookmark/main/logo.png" alt="Printable-Bookmark logo: an open wooden herbarium press seen from above, its straps loose, one cream sheet inside holding a single pressed green oak leaf">
+<h1>Printable-Bookmark: the herbarium press catalogue</h1>
+<p>A catalogue page for the keeper's desk: a small Python script that
+collects the pin pages of one Pinterest board and saves them as printable
+bookmark material.</p>
 </header>
+<figure><img src="https://raw.githubusercontent.com/Epsilon0xCell/Printable-Bookmark/main/intro-banner.png" alt="Hands pulling the strap snug on a closed herbarium press holding a fresh sheet, a stack of pressed pages beside it on the wooden table"></figure>
 <main>
-<div class="shelf"><div class="inner">
-<span class="shelfnum">Shelf one</span>
-<h2>The honest description</h2>
-<p>Printable-Bookmark is a Python script, run as <code>python3 main.py</code>, that downloads the pin pages linked from a single Pinterest board devoted to printable bookmarks. It saves pages. It does not design bookmarks, draw them, or lay them out for a printer, and this catalogue does not claim otherwise. Crocks keep food that somebody else grew; this script keeps pages that somebody else made.</p>
-</div></div>
-<hr class="bubbles">
-<div class="shelf"><div class="inner">
-<span class="shelfnum">Shelf two</span>
-<h2>The ingredients</h2>
-<p>Two Python packages and nothing else beyond the standard library: <code>requests</code> and <code>beautifulsoup4</code>. The built in <code>html.parser</code> does the parsing work on purpose, so the install list stays at two.</p>
-<pre>pip install requests beautifulsoup4
-python3 main.py</pre>
-</div></div>
-<hr class="bubbles">
-<div class="shelf" id="method"><div class="inner">
-<span class="shelfnum">Shelf three</span>
-<h2>The method, as a preserving sequence</h2>
-<p><b>First,</b> the board address is read from one constant at the top of main.py, <code>BOARD_URL</code>, the only thing a user is expected to change.</p>
-<p><b>Second,</b> fetch asks for a page with a 15 second timeout per request, and reports network failures and HTTP failures as separate messages.</p>
-<p><b>Third,</b> <code>find_printable_bookmarks</code> hunts the board markup for links carrying the pin class recorded in the constant <code>PIN_LINK_CLASS</code>, currently GrowthUnauthPinImage, and resolves relative links against the Pinterest host.</p>
-<p><b>Fourth,</b> <code>download_printable_bookmark</code> writes each pin page in binary, exactly as it arrived, under a file name taken from the last segment of its address by <code>filename_for</code>, with no extension invented. A URL with an empty path falls back to the name bookmark.</p>
-<p><b>Fifth,</b> the run counts only the saves that succeeded.</p>
-</div></div>
-<hr class="bubbles">
-<div class="shelf"><div class="inner">
-<span class="shelfnum">Shelf four</span>
-<h2>The keeping notes</h2>
-<div class="caution"><p>If two pins end in the same final segment, the later save overwrites the earlier one without warning, and the count still rises for both.</p></div>
-<div class="caution"><p>If nothing is saved, the script prints that the board may be empty or that Pinterest may have changed its markup, and it exits with status 1 rather than pretending success.</p></div>
-<div class="caution"><p>Changing the board means changing <code>BOARD_URL</code> and, for a different host, the hardcoded host used to resolve links as well. The pin link class name is a maintenance point that Pinterest can break without notice.</p></div>
-<p><a class="dill" href="https://github.com/Epsilon0xCell/Printable-Bookmark/blob/main/main.py">Read main.py itself, top to bottom</a></p>
-</div></div>
+<section>
+<h2>What it is</h2>
+<p><strong>Printable-Bookmark</strong> is a small Python utility that
+collects every pin from one Pinterest board and downloads the pin pages for
+use as printable bookmark material. You point it at a single board, press
+it once, and the pages come down into a local folder, ready to print, cut,
+and slip between the pages of a book.</p>
+</section>
+<section>
+<h2>How it works</h2>
+<p>Run it from the repository root:</p>
+<p><code>python3 main.py</code></p>
+<ul>
+<li>The script reads the single <code>BOARD_URL</code> constant near the top
+of <code>main.py</code> and fetches that board's page.</li>
+<li>It finds every pin link on the page with BeautifulSoup, matching the
+anchor class <code>GrowthUnauthPinImage</code>, and keeps the unique
+pin URLs.</li>
+<li>Each pin page is fetched and saved into the folder named by the
+<code>FOLDER</code> variable, under the last segment of its URL.</li>
+<li>Only successful saves are counted; the run ends by reporting how many
+pages were pressed into the folder.</li>
+</ul>
+</section>
+<section>
+<h2>Requirements</h2>
+<ul>
+<li>Python 3</li>
+<li>The only third party libraries are <code>requests</code> and
+<code>beautifulsoup4</code>. Install them with
+<code>pip install requests beautifulsoup4</code>.</li>
+</ul>
+</section>
+<section>
+<h2>Keeper notes</h2>
+<ul>
+<li>Every request carries a 15 second timeout, so a slow board cannot hang
+the press indefinitely.</li>
+<li>Saves are binary and named after the last segment of the pin URL; a
+re-run over the same board overwrites files with the same name rather than
+duplicating them.</li>
+<li>The board address lives in one constant, <code>BOARD_URL</code>; change
+that one line to press a different board.</li>
+<li>If the board page no longer uses the <code>GrowthUnauthPinImage</code>
+class, the script finds no pins and saves nothing; update the
+<code>PIN_LINK_CLASS</code> constant to match the page again.</li>
+<li>An empty board, or a board that fails to load, surfaces as a request
+error or a zero count rather than a partial folder.</li>
+</ul>
+<h3>The pieces</h3>
+<div class="grid">
+<div><b>main.py</b><p>The whole instrument: board fetch, pin link
+collection, per pin download, and the final count.</p></div>
+<div><b>README.md</b><p>The short manual this catalogue expands.</p></div>
+<div><b>Printable-Bookmark-Website</b><p>This catalogue: index, fonts, the
+artwork, and the colophon.</p></div>
+</div>
+</section>
 </main>
 <footer>
-<p>Colophon: fonts are Amatic SC and Barlow, both SIL Open Font License 1.1, license texts beside the font files. Frosty was a lettering reference only and is not embedded; nothing about frost belongs over a fermenting pantry.</p>
+<img src="https://raw.githubusercontent.com/Epsilon0xCell/Printable-Bookmark/main/banner.png" alt="An open keeping book on a wooden table, a row of small pressed leaves and stems taped across its page, the open wooden herbarium press with its straps waiting beside it">
+<p>Printable-Bookmark catalogue. Artwork: herbarium press photography in
+paper cream, pressed leaf green, string tan, and one faded ink blue. Fonts:
+IM Fell English SC for headings and Source Serif 4 for text, self hosted
+under the SIL Open Font License. Licence: MIT (see LICENSE in the
+repository).</p>
 </footer>
-</div>
 </body>
 </html>

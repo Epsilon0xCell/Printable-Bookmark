@@ -1,10 +1,12 @@
-![Intro: a fermentation pantry with nothing to read, crocks on every shelf and one bright bubble waiting in the smallest](intro-banner.png)
+![Intro: hands pulling the strap snug on a closed herbarium press holding a fresh sheet, a stack of pressed pages beside it on the wooden table](intro-banner.png)
 
 
 # Printable-Bookmark
+
+<p align="center"><img src="logo.png" alt="Printable-Bookmark logo: an open wooden herbarium press seen from above, its straps loose, one cream sheet inside holding a single pressed green oak leaf" width="200"></p>
 Printable Bookmark Generator
 
-![Banner](banner.png)
+![Banner: an open keeping book on a wooden table, a row of small pressed leaves and stems taped across its page, the open wooden herbarium press with its straps waiting beside it](banner.png)
 
 ![Scene](scene.svg)
 
